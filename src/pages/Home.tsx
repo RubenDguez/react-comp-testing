@@ -17,7 +17,7 @@ const Home = () => {
         <Category data={categories} setCategories={setCategories} setCurrentCategory={setCurrentCategory}/>
       </div>
       <div className="w-75">
-        <TodoList categoryTodos={categoryTodos}/>
+        <TodoList setCategories={setCategories} categoryTodos={categoryTodos}/>
       </div>
     </div>
   )
