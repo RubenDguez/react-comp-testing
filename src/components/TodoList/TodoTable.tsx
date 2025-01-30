@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
-import { GiGearHammer } from "react-icons/gi";
+import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
+import { GiGearHammer } from 'react-icons/gi';
 import { TodoContext } from '../../context/TodoContext';
 
 const TodoTable = ({ categoryTodos }: { categoryTodos: ITodoCategory }) => {
@@ -28,6 +28,27 @@ const TodoTable = ({ categoryTodos }: { categoryTodos: ITodoCategory }) => {
       };
 
       todo.setCategories(completeTodo);
+    },
+    [todo],
+  );
+
+  const handleRemoveTodo = useCallback(
+    (id: string) => {
+      const removeTodo = (prev: Array<ITodoCategory>): Array<ITodoCategory> => {
+        const newTodoCat: Array<ITodoCategory> = [];
+
+        for (const t of prev) {
+          if (t.id === todo.currentCategory) {
+            t.todo = t.todo.filter((f) => f.id !== id);
+          }
+
+          newTodoCat.push(t);
+        }
+
+        return newTodoCat;
+      };
+
+      todo.setCategories(removeTodo);
     },
     [todo],
   );
@@ -61,13 +82,15 @@ const TodoTable = ({ categoryTodos }: { categoryTodos: ITodoCategory }) => {
               </td>
               <td>{todo.due.toLocaleDateString()}</td>
               <td className="text-center">
-                <p className={todo.completed ? "h4 text-success" : "h4 text-warning"}>{todo.completed ? <IoCheckmarkDoneCircleOutline /> : <GiGearHammer />}</p>
+                <p className={todo.completed ? 'h4 text-success' : 'h4 text-warning'}>{todo.completed ? <IoCheckmarkDoneCircleOutline /> : <GiGearHammer />}</p>
               </td>
               <td className="d-flex flex-row gap-2">
                 <button onClick={() => toggleTodoCompletion(todo.id, todo.completed)} className={todo.completed ? 'btn btn-sm btn-info w-100' : 'btn btn-sm btn-success w-100'}>
                   {todo.completed ? 'Back Todo' : 'Complete'}
                 </button>
-                <button className="btn btn-sm btn-danger w-100">Delete</button>
+                <button onClick={() => handleRemoveTodo(todo.id)} className="btn btn-sm btn-danger w-100">
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
