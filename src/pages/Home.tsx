@@ -1,26 +1,21 @@
-import Category from "../components/Category/Category.tsx";
-import {todos} from '../mock/Category.mock.ts'
-import {useMemo, useState} from "react";
-import TodoList from "../components/TodoList/TodoList.tsx";
+import { useContext } from 'react';
+import Category from '../components/Category/Category.tsx';
+import TodoList from '../components/TodoList/TodoList.tsx';
+import { TodoContext } from '../context/TodoContext.tsx';
 
 const Home = () => {
-  const [categories, setCategories] = useState<Array<ITodoCategory>>(todos);
-  const [currentCategory, setCurrentCategory] = useState<string | null>(null);
-
-  const categoryTodos = useMemo(() => {
-    return categories.find((f) => f.id === currentCategory);
-  }, [categories, currentCategory]);
+  const todo = useContext(TodoContext)!;
 
   return (
-    <div className="container d-flex flex-row gap-3 w-100 p-5">
-      <div className="w-25">
-        <Category data={categories} setCategories={setCategories} setCurrentCategory={setCurrentCategory}/>
+      <div className="container d-flex flex-row gap-5 w-100 p-5 bg-light vh-100">
+        <div className="w-25">
+          <Category data={todo.categories} setCategories={todo.setCategories} setCurrentCategory={todo.setCurrentCategory} />
+        </div>
+        <div className="w-75">
+          <TodoList setCategories={todo.setCategories} categoryTodos={todo.categoryTodos} />
+        </div>
       </div>
-      <div className="w-75">
-        <TodoList setCategories={setCategories} categoryTodos={categoryTodos}/>
-      </div>
-    </div>
-  )
-}
+  );
+};
 
 export default Home;
