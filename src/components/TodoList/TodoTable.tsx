@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
-import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { GiGearHammer } from 'react-icons/gi';
+import { IoCheckmarkDoneCircleOutline } from 'react-icons/io5';
 import { TodoContext } from '../../context/TodoContext';
 
 const TodoTable = ({ categoryTodos }: { categoryTodos: ITodoCategory }) => {
