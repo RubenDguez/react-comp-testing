@@ -22,10 +22,10 @@ const TodoContextProvider = ({ children }: { children: ReactNode }) => {
   const values = useMemo(() => {
     return {
       categories: categories,
-      currentCategory: currentCategory,
       setCategories: setCategories,
+      currentCategory: currentCategory,
       setCurrentCategory: setCurrentCategory,
-      categoryTodos,
+      categoryTodos: categoryTodos,
     };
   }, [categories, currentCategory, categoryTodos, setCategories, setCurrentCategory]);
 
